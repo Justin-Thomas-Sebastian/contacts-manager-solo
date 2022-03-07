@@ -8,3 +8,6 @@
 # Compiled output
 *.class
 out/*
+
+#contacts data
+contactsData/*
