@@ -39,7 +39,7 @@ public class Main {
 
         boolean isRunning = true;
         while(isRunning){
-            Scanner in = new Scanner(System.in);
+            Input in = new Input();
             System.out.println(" ");
             System.out.println("1. View contacts.");
             System.out.println("2. Add a new contact.");
@@ -47,7 +47,7 @@ public class Main {
             System.out.println("4. Delete an existing contact.");
             System.out.println("5. Exit.");
             System.out.print("Enter choice (1 - 5): ");
-            int userOption = in.nextInt();
+            int userOption = in.getInt();
             System.out.println(" ");
 
             switch(userOption) {
@@ -106,25 +106,25 @@ public class Main {
     }
 
     public static Contact addContact(List<Contact> contactList){
-        Scanner in = new Scanner(System.in);
+        Input in = new Input();
         System.out.print("Enter first name: ");
-        String firstName = in.nextLine();
+        String firstName = in.getString();
         System.out.print("Enter last name: ");
-        String lastName = in.nextLine();
+        String lastName = in.getString();
         System.out.print("Enter contact number: ");
-        String contactNumber = in.nextLine();
+        String contactNumber = in.getString();
         Contact newContact = new Contact(firstName, lastName, contactNumber);
         contactList.add(newContact);
         return newContact;
     }
 
     public static List<Contact> searchContact(List<Contact> contactList){
-        Scanner in = new Scanner(System.in);
+        Input in = new Input();
         System.out.println(" ");
         System.out.print("First Name: ");
-        String fName = in.nextLine();
+        String fName = in.getString();
         System.out.print("Last Name: ");
-        String lName = in.nextLine();
+        String lName = in.getString();
         System.out.println("Searching...");
         List<Contact> found = new ArrayList<>();
         for(Contact contact: contactList){
@@ -136,12 +136,12 @@ public class Main {
     }
 
     public static Contact deleteContact(List<Contact> contactList){
-        Scanner in = new Scanner(System.in);
+        Input in = new Input();
         System.out.println("Contact to Delete.");
         System.out.print("First Name: ");
-        String fName = in.nextLine();
-        System.out.println("Last Name: ");
-        String lName = in.nextLine();
+        String fName = in.getString();
+        System.out.print("Last Name: ");
+        String lName = in.getString();
         Contact toRemove = new Contact();
         for(Contact contact : contactList){
             if(fName.equalsIgnoreCase(contact.getFirstName()) && lName.equalsIgnoreCase(contact.getLastName())) {
