@@ -7,6 +7,8 @@ import java.nio.file.Paths;
 import util.Input;
 
 public class Main {
+    static Input in = new Input();
+
     public static void main (String[] args) throws IOException {
         String directory = "contactsData";
         String fileName = "contacts.txt";
@@ -40,7 +42,6 @@ public class Main {
 
         boolean isRunning = true;
         while(isRunning){
-            Input in = new Input();
             System.out.println(" ");
             System.out.println("1. View contacts.");
             System.out.println("2. Add a new contact.");
@@ -91,7 +92,6 @@ public class Main {
     }
 
     public static void addContact(List<Contact> contactList){
-        Input in = new Input();
         System.out.print("Enter first name: ");
         String firstName = in.getString();
         System.out.print("Enter last name: ");
@@ -100,10 +100,10 @@ public class Main {
         String contactNumber = in.getString();
         Contact newContact = new Contact(firstName, lastName, contactNumber);
         contactList.add(newContact);
+        System.out.println("Added: " + newContact.getFirstName() + " " + newContact.getLastName());
     }
 
     public static void searchContact(List<Contact> contactList){
-        Input in = new Input();
         System.out.println(" ");
         System.out.print("First Name: ");
         String fName = in.getString();
@@ -120,7 +120,6 @@ public class Main {
     }
 
     public static void deleteContact(List<Contact> contactList){
-        Input in = new Input();
         System.out.println("Contact to Delete.");
         System.out.print("First Name: ");
         String fName = in.getString();
@@ -130,6 +129,8 @@ public class Main {
         for(Contact contact : contactList){
             if(fName.equalsIgnoreCase(contact.getFirstName()) && lName.equalsIgnoreCase(contact.getLastName())) {
                 toRemove = contact;
+                System.out.print("Deleted: ");
+                System.out.println(contact.getFirstName() + " " + contact.getLastName());
             }
         }
         contactList.remove(toRemove);
