@@ -1,12 +1,13 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Arrays;
-import java.nio.file.*;
-import java.util.Scanner;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import util.Input;
 
 public class Main {
-    public static void main (String[] args) throws Exception {
+    public static void main (String[] args) throws IOException {
         String directory = "contactsData";
         String fileName = "contacts.txt";
 
@@ -69,6 +70,7 @@ public class Main {
             }
         }
 
+        // Update text file with any changes made
         List<String> newContactListStr = new ArrayList<>();
         for(Contact contact : contactList){
             String contactLine = contact.getFirstName() + " " + contact.getLastName() + " " + contact.getContactNumber();
