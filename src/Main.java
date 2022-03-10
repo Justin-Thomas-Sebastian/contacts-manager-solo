@@ -46,8 +46,7 @@ public class Main {
             System.out.println("3. Search a contact by name.");
             System.out.println("4. Delete an existing contact.");
             System.out.println("5. Exit.");
-            System.out.print("Enter choice (1 - 5): ");
-            int userOption = in.getInt();
+            int userOption = in.getInt(1, 5);
             System.out.println(" ");
 
             switch(userOption) {
@@ -55,36 +54,13 @@ public class Main {
                     viewContacts(contactList);
                     break;
                 case 2:
-                    Contact newContact = addContact(contactList);
-                    String line = newContact.getFirstName() + " " + newContact.getLastName() + " " + newContact.getContactNumber();
-                    contactListStr.add(line);
-                    List<String> newContacts = new ArrayList<>();
-                    newContacts.add(line);
-                    Files.write(
-                      dataFile,
-                      newContacts,
-                      StandardOpenOption.APPEND
-                    );
+                    addContact(contactList);
                     break;
                 case 3:
-                    List<Contact> found = searchContact(contactList);
-                    viewContacts(found);
+                    searchContact(contactList);
                     break;
                 case 4:
-                    Contact removed = deleteContact(contactList);
-                    String toRemoveStr = "";
-                    for(String contact : contactListStr){
-                        String[] contactElements = contact.split(" ");
-                        if(contactElements[0].equalsIgnoreCase(removed.getFirstName()) &&
-                        contactElements[1].equalsIgnoreCase(removed.getLastName())){
-                            toRemoveStr = contact;
-                        }
-                    }
-                    contactListStr.remove(toRemoveStr);
-                    Files.write(
-                      dataFile,
-                      contactListStr
-                    );
+                    deleteContact(contactList);
                     break;
                 case 5:
                     System.out.println("Exiting...");
@@ -92,6 +68,13 @@ public class Main {
                     break;
             }
         }
+
+        List<String> newContactListStr = new ArrayList<>();
+        for(Contact contact : contactList){
+            String contactLine = contact.getFirstName() + " " + contact.getLastName() + " " + contact.getContactNumber();
+            newContactListStr.add(contactLine);
+        }
+        Files.write(dataFile, newContactListStr);
     }
 
     public static void viewContacts(List<Contact> contactList){
@@ -105,7 +88,7 @@ public class Main {
         System.out.println(" ");
     }
 
-    public static Contact addContact(List<Contact> contactList){
+    public static void addContact(List<Contact> contactList){
         Input in = new Input();
         System.out.print("Enter first name: ");
         String firstName = in.getString();
@@ -115,10 +98,9 @@ public class Main {
         String contactNumber = in.getString();
         Contact newContact = new Contact(firstName, lastName, contactNumber);
         contactList.add(newContact);
-        return newContact;
     }
 
-    public static List<Contact> searchContact(List<Contact> contactList){
+    public static void searchContact(List<Contact> contactList){
         Input in = new Input();
         System.out.println(" ");
         System.out.print("First Name: ");
@@ -132,10 +114,10 @@ public class Main {
                 found.add(contact);
             }
         }
-        return found;
+        viewContacts(found);
     }
 
-    public static Contact deleteContact(List<Contact> contactList){
+    public static void deleteContact(List<Contact> contactList){
         Input in = new Input();
         System.out.println("Contact to Delete.");
         System.out.print("First Name: ");
@@ -149,6 +131,5 @@ public class Main {
             }
         }
         contactList.remove(toRemove);
-        return toRemove;
     }
 }
